@@ -1,0 +1,36 @@
+#sign-in-box{
+    width: 400px;
+    height: 280px;
+    border: solid #979797 1px;
+    border-radius: 4px;
+    background-color: #f0f0ff;
+    margin: auto;
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 48px;
+    margin-top: 260px;
+}
+input{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 5px;
+    font-size: 12px;
+    width: 240px;
+    height: 30px;
+    margin-left: 3px;
+    text-indent: 6px;
+}
+input[type="submit"] {
+    background-color: #389aff;
+    margin-left: 0px;
+    color: white;
+    height: 36px;
+    margin-top: 12px;
+    border: solid #8989d7 1px;
+    text-indent: 0px;
+}
+input[type="submit"]:active {
+    background-color: #389aff;
+    margin-left: 0px;
+    color: white;
+}

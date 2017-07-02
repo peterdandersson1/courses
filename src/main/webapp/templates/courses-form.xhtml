@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:form>
+        <h:panelGrid columns="2">
+            <p:outputLabel value="Course Name:"/>
+            <p:inputText value="#{courseBean.courseName}"/>
+            <p:outputLabel value="Start Date:"/>
+            <p:calendar value="#{courseBean.startDate}" locale="sv" navigator="true" pattern="yyyy-MM-dd" />
+            <!--input type="date" value="#{courseBean.startDate}" /-->
+            <!--h:inputText a:type="date" value="#{courseBean.startDate}" /-->
+            <!--h:inputText value="#{courseBean.startDate}" /-->
+            <p:outputLabel value="End Date:"/>
+            <p:calendar value="#{courseBean.endDate}" locale="sv" navigator="true" pattern="yyyy-MM-dd" />
+            <p:outputLabel value="Capacity:"/>
+            <p:inputText value="#{courseBean.maxStudents}" />
+            <p:outputLabel value="Description:"/>
+            <p:inputTextarea rows="10" width="100%" value="#{courseBean.description}"/>
+            <h:inputHidden value="#{courseBean.id}" />
+        </h:panelGrid>
+
+        <h:commandButton action="#{courseBean.createCourse()}" value="#{courseBean.submitButtonLabel}">
+            <!--f:ajax execute="@form" listener="#{coursesBean.createCourse()}" /-->
+        </h:commandButton>
+    </h:form>
+</f:view>
+</html>

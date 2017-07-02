@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:custom="http://java.sun.com/jsf/composite/composite-components"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<!--
+<f:view>
+-->
+<style>
+    /*table {border-spacing: 0px;}*/
+    table {
+        border-collapse: separate;
+    }
+
+    tr.even-row {
+        background-color: #daecff;
+    }
+
+    tr.even-row {
+        background-color: #ddd;
+    }
+
+    tr.odd-row {
+        background-color: #eee;
+    }
+
+    td {
+        padding: 2px;
+    }
+
+    /*tr.even-row td, tr.odd-row td {padding: 10px;}
+    tr.even-row:first-child td:first-child, tr.even-row:first-child td:first-child { border-top-left-radius: 10px; margin-top: 15px; }
+    tr:first-child td:last-child { border-top-right-radius: 10px; }
+    tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+    tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+    td { border-: 25px 0px; }
+    */
+</style>
+<!--
+    <h:form id="courses-table">
+-->
+<br/>
+<h:form id="courses-table">
+    <c:if test="#{context == 'studentRegisteredCourses'}">
+        <c:set var="courses" value="#{userBean.courses}"/>
+        <c:set var="noResultsMessage" value="You are not registered for any courses."/>
+    </c:if>
+    <c:if test="#{context == 'studentOtherCourses'}">
+        <c:set var="courses" value="#{userBean.otherCourses}"/>
+        <c:set var="noResultsMessage" value="There are no other courses to choose from."/>
+    </c:if>
+    <c:if test="#{context == 'adminAllCourses'}">
+        <c:set var="courses" value="#{courseBean.allCourses}"/>
+        <c:set var="noResultsMessage" value="There are no courses."/>
+    </c:if>
+    <c:if test="#{context == 'attendance' and userBean.isAdmin()}">
+        <c:set var="courses" value="#{courseBean.allCourses}"/>
+        <c:set var="noResultsMessage" value="There are no courses."/>
+    </c:if>
+    <c:if test="#{context == 'attendance' and userBean.teacher}">
+        <c:set var="courses" value="#{userBean.courses}"/>
+        <c:set var="noResultsMessage" value="There are no courses."/>
+    </c:if>
+    <c:if test="#{context != 'attendance' and userBean.teacher}">
+        <c:set var="courses" value="#{userBean.courses}"/>
+        <c:set var="noResultsMessage" value="You are not teaching any courses."/>
+    </c:if>
+    <h:panelGroup rendered="#{courses.size() == 0}">
+        <h:outputText value="#{noResultsMessage}"/>
+    </h:panelGroup>
+
+    <h:panelGrid columns="1" rendered="#{courses.size() > 0}">
+
+        <h:dataTable binding="#{cTable}" value="#{courses}" var="course"
+                     rowClasses="even-row, odd-row">
+            <h:column>
+                <h:outputText value="#{cTable.rowIndex + 1}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Course Name</f:facet>
+                <h:outputText value="#{course.courseName}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Description</f:facet>
+                <h:outputText value="#{course.description}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Start Date</f:facet>
+                <h:outputText converter="groupkmp.DateConverter" value="#{course.startDate}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">End Date</f:facet>
+                <h:outputText converter="groupkmp.DateConverter" value="#{course.endDate}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Take up</f:facet>
+                <h:outputText value="#{courseBean.getRegisteredStudentCount(course.id)}/#{course.maxStudents}"/>
+            </h:column>
+
+            <h:column rendered="#{context == 'adminAllCourses'}">
+                <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
+                <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"
+                                 rendered="#{courseBean.canRemove(course.id)}"/>
+
+            </h:column>
+
+            <h:column rendered="#{context == 'attendance'}">
+                <h:commandLink value="Take Attendance">
+                    <f:ajax listener="#{attendanceBean.takeAttendance(course.id)}"/>
+                    <f:ajax render="attendance-form"/>
+                    <f:ajax render="@form"/>
+                </h:commandLink>
+            </h:column>
+            <h:column rendered="#{context == 'attendance'}">
+                <h:outputText value="**" rendered="${attendanceBean.courseSelectionList[cTable.rowIndex]}"/>
+            </h:column>
+
+            <h:column rendered="#{context != 'attentance'}">
+                <f:facet name="header">Info</f:facet>
+                <custom:deregister courseBean="#{courseBean}"
+                                   isStudent="#{userBean.student}"
+                                   userId="#{userBean.user.id}"
+                                   courseId="#{course.id}"/>
+            </h:column>
+<!--            <h:column rendered="#{userBean.teacher}">
+                <h:commandLink value="Attendance" action="#{attendanceBean.courseAttendanceStats(course.id)}"/>
+            </h:column>-->
+
+        </h:dataTable>
+    </h:panelGrid>
+</h:form>
+<!--</f:view>-->
+</html>

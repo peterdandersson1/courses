@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/site-template.xhtml">
+    <ui:param name="pageTitle" value="Stats"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <f:view>
+                <h:outputLabel value="There are no stats at the moment" rendered="#{!adminStats.statsExists()}" />
+                <h:form rendered="#{adminStats.statsExists()}">
+                    <div id="day-container">
+                        <h:outputLabel value="Date:" />
+                        <h:inputHidden value="#{adminStats.dateOffset}" />
+                        <h:commandLink action="#{adminStats.changeDay(-1)}">
+                            <h:graphicImage value="/resources/images/circle-arrow-left.jpg" width="14"/>
+                        </h:commandLink>
+                        <h:outputLabel value="#{adminStats.formatDate()}" style="margin: 10px"/>
+                        <h:commandLink action="#{adminStats.changeDay(1)}">
+                            <h:graphicImage value="/resources/images/circle-arrow-right.jpg" width="14" />
+                        </h:commandLink>
+                        <ui:decorate template="../templates/admin-courses-attendance-table.xhtml"/>
+                        <br/>
+                        <br/>
+                        <h:outputLabel value="#{adminStats.courseAttendanceTotal()}" />
+                    </div>
+                </h:form>
+            </f:view>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

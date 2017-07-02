@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <ui:fragment rendered="#{not empty dataList}">
+        <table class="generic-table">
+            <tr>
+                <ui:repeat value="#{dataList[0].entrySet().toArray()}" var="head">
+                    <th class="generic-table-header">#{head.key}</th>
+                </ui:repeat>
+            </tr>
+            <tbody>
+            <ui:repeat var="items" value="#{dataList}" varStatus="status">
+                <h:panelGroup rendered="#{status.even}">
+                    <tr>
+                        <ui:repeat value="#{items.entrySet().toArray()}" var="item">
+                            <td class="generic-table-even-row">#{item.value}</td>
+                        </ui:repeat>
+                        <ui:fragment rendered="#{editable}" >
+                            <td><h:button value="edit" /></td>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{removable}" >
+                            <td><h:button value="delete" /></td>
+                        </ui:fragment>
+                    </tr>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{status.odd}">
+                    <tr style="background-color: #dddddd">
+                        <ui:repeat value="#{items.entrySet().toArray()}" var="item">
+                            <td class="generic-table-even-row">#{item.value}</td>
+                        </ui:repeat>
+                        <ui:fragment rendered="#{editable}" >
+                            <td><h:button value="edit" /></td>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{removable}" >
+                            <td><h:button value="delete" /></td>
+                        </ui:fragment>
+                    </tr>
+                </h:panelGroup>
+            </ui:repeat>
+            </tbody>
+        </table>
+    </ui:fragment>
+</f:view>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:outputStylesheet name="css/tables.css" />
+    <h:panelGrid columns="1">
+        <h:dataTable id="teachers-table" value="#{teachersBean.allTeachers}" var="teacher" rowClasses="even-row, odd-row">
+            <h:column >
+                <f:facet name="header">Last Name</f:facet>
+                <h:outputText value="#{teacher.lastName}"/>
+            </h:column>
+            <h:column >
+                <f:facet name="header">First Name</f:facet>
+                <h:outputText value="#{teacher.firstName}"/>
+            </h:column>
+            <h:column >
+                <f:facet name="header">Contact</f:facet>
+                <h:outputText value="#{teacher.email}"/>
+            </h:column>
+            <h:column >
+                <f:facet name="header">Courses</f:facet>
+                <h:outputText value="#{teacher.courses.size()}"/>
+            </h:column>
+            <h:column >
+                <h:commandButton value="Remove" action="#{teachersBean.removeTeacher(teacher.id)}"/>
+            </h:column>
+            <h:column >
+                <h:commandButton value="Edit" action="#{teachersBean.edit(teacher)}"/>
+            </h:column>
+        </h:dataTable>
+    </h:panelGrid>
+</f:view>
+</html>

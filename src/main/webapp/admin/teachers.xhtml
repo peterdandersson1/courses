@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/templates/site-template.xhtml">
+    <ui:param name="pageTitle" value="Teachers"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <f:view>
+                <h:outputStylesheet name="css/admin-teachers.css" />
+                <h:form rendered="#{userBean.isAdmin()}">
+                    <h:outputLabel rendered="#{!teachersBean.teachersExist()}" value="There are no teachers at the moment" />
+                    <c:if test="#{teachersBean.teachersExist()}">
+                        <ui:decorate template="../templates/teachers-table.xhtml">
+                            <ui:param name="dataList" value="#{teachersBean.allTeachers()}"/>
+                        </ui:decorate>
+                    </c:if>
+                    <br />
+                    <br />
+                    <h:commandButton value="Create New" action="#{teachersBean.create}"/>
+                        <c:if test="#{teachersBean.popUp}">
+                            <ui:decorate template="../templates/teacher-pop-up.xhtml"> </ui:decorate>
+                        </c:if>
+                </h:form>
+                    <h:outputLabel rendered="#{!userBean.isAdmin()}" value="denied"/>
+            </f:view>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

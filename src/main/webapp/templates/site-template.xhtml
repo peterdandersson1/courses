@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view contentType="text/html">
+    <h:head>
+        <f:metadata charset="UTF-8"/>
+        <title>CourseApp - #{pageTitle}</title>
+        <style type="text/css">
+            #main-container {
+                margin: 40px;
+                margin-top: 80px;
+            }
+
+            /* space tables out a smidge */
+            td, th {
+                text-align: center;
+                padding: 0px 15px;
+            }
+
+            #cal {
+                margin: 100px;
+            }
+
+            #courses-table, #cal-form {
+                display: inline-block;
+                vertical-align: top;
+            }
+        </style>
+        <h:outputStylesheet library="css" name="nav-bar.css"/>
+    </h:head>
+    <h:body>
+        <p:growl id="msgs" showDetail="true"/>
+        <ui:include src="nav-bar.xhtml"/>
+        <ui:insert name="main-panel"/>
+    </h:body>
+</f:view>
+</html>

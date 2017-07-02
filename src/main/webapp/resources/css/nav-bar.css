@@ -1,0 +1,62 @@
+#nav-bar{
+    width: 100%;
+    height: 60px;
+    background-color: #389aff;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+#nav-bar-logo{
+    color: white;
+    position: fixed;
+    top: 20px;
+    left: 0px;
+    display: inline-block;
+    text-indent: 40px;
+}
+#nav-bar-courses{
+    position: fixed;
+    top: 20px;
+    left: 220px;
+    display: inline-block;
+}
+#nav-bar-teachers{
+    position: fixed;
+    top: 20px;
+    left: 340px;
+    display: inline-block;
+}
+#nav-bar-students{
+    position: fixed;
+    top: 20px;
+    left: 460px;
+    display: inline-block;
+}
+#nav-bar-stats{
+    position: fixed;
+    top: 20px;
+    left: 580px;
+    display: inline-block;
+}
+#nav-bar-log-out {
+    position: fixed;
+    top: 20px;
+    right: 40px;
+    display: inline-block;
+}
+.nav-label{
+    text-decoration: none;
+    color: white;
+}
+input:hover{
+    cursor: pointer;
+}
+
+
+
+#nav-bar-dev{
+    position: fixed;
+    top: 20px;
+    left: 700px;
+    display: inline-block;
+}

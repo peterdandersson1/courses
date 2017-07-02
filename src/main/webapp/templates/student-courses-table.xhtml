@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:custom="http://java.sun.com/jsf/composite/composite-components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <style>
+        /*table {border-spacing: 0px;}*/
+        table {
+            border-collapse: separate;
+        }
+
+        tr.even-row {
+            background-color: #daecff;
+        }
+
+        tr.even-row {
+            background-color: #ddd;
+        }
+
+        tr.odd-row {
+            background-color: #eee;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        /*tr.even-row td, tr.odd-row td {padding: 10px;}
+        tr.even-row:first-child td:first-child, tr.even-row:first-child td:first-child { border-top-left-radius: 10px; margin-top: 15px; }
+        tr:first-child td:last-child { border-top-right-radius: 10px; }
+        tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+        tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+        td { border-: 25px 0px; }
+        */
+    </style>
+    <h:form>
+        <h:panelGrid columns="1">
+            <h:dataTable binding="#{scTable}" id="courses-table" value="#{userBean.courses}" var="course"
+                         rowClasses="even-row, odd-row">
+                <h:column>
+                    <h:outputText value="#{scTable.rowIndex}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Course Name</f:facet>
+                    <h:outputText id="id" value="#{course.courseName}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Description</f:facet>
+                    <h:outputText value="#{course.description}"/>
+                </h:column>
+                <h:column rendered="#{userBean.isAdmin()}">
+                        <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"/>
+                </h:column>
+                <h:column rendered="#{userBean.isAdmin()}">
+                        <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
+                </h:column>
+<!--                <h:column rendered="#{(userBean.isStudent())}">
+                    <h:commandLink value="Deregister" action="#{courseBean.deregister(course.id, userBean.user.id)}"/>
+                </h:column>-->
+<!--                <h:column rendered="#{(userBean.isStudent())}">
+                    <f:facet name="header">Has Left</f:facet>
+                    <h:outputText value="#{studentBean.getHasLeftCourse(userBean.user, course.id)}" />
+                </h:column>-->
+                <h:column>
+                    <f:facet name="header">Start Date</f:facet>
+                    <h:outputText converter="groupkmp.DateConverter" value="#{course.startDate}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">End Date</f:facet>
+                    <h:outputText converter="groupkmp.DateConverter" value="#{course.endDate}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Take up</f:facet>
+                    <h:outputText value="#{course.studentCount}/#{course.maxStudents}"/>
+                </h:column>
+<!--                <h:column>
+                    <f:facet name="header">Take up</f:facet>
+                    <h:outputText value="#{courseBean.getRegisteredStudentCount(course.id)}/#{course.maxStudents}"/>
+                </h:column>-->
+                <h:column>
+                    <f:facet name="header">Status</f:facet>
+                    <custom:deregister courseBean="#{courseBean}"
+                                       isStudent="#{userBean.student}"
+                                       userId="#{userBean.user.id}"
+                                       courseId="#{course.id}"/>
+                </h:column>
+
+                <!--h:column rendered="#{(userBean.isStudent()) and !userBean.getHasLeftCourse(userBean.courses[mycourses.rowIndex])}">
+                    <h:commandLink value="Deregister" action="#{userBean.deregister(course.id)}"/>
+                </h:column-->
+            </h:dataTable>
+        </h:panelGrid>
+    </h:form>
+</f:view>
+</html>

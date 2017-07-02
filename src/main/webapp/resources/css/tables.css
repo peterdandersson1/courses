@@ -1,0 +1,7 @@
+table {
+    border-collapse: separate;
+}
+tr.even-row {background-color: #daecff; }
+tr.even-row {background-color: #ddd; }
+tr.odd-row {background-color: #eee; }
+td {padding: 10px;}

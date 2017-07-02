@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/site-template.xhtml">
+    <ui:param name="pageTitle" value="Page One"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <f:view>
+                <h:link value="Login" outcome="login"/>
+                <br />
+                <h:form>
+                    <h:commandLink value="Auto Login" action="#{userBean.autoLogin()}"/>
+                </h:form>
+                <h:link value="Add user" outcome="add-user"/>
+                <br />
+                <h:form>
+                    <h:commandLink value="Admin Students Page" action="#{userBean.adminStudentsPage()}"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Students Courses Page" action="#{userBean.studentCoursesPage()}"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Students Take Attendance" action="#{userBean.attendancePage()}"/>
+                </h:form>
+                <h:link value="Admin" outcome="admin"/>
+                <br />
+                <h:link value="Student" outcome="student"/>
+                <br />
+                <h:link value="Teacher" outcome="teacher"/>
+                <h:form>
+                    <h:commandLink value="Teacher home" action="#{userBean.teacherPage()}"/>
+                </h:form>
+                <br />
+                <h:link value="Nav test" outcome="nav-test"/>
+                <br />
+                <h:link value="Admins teachers" outcome="admin/teachers"/>
+                <br />
+            </f:view>
+        </div>
+    </ui:define>
+</ui:composition>
+
+</html>

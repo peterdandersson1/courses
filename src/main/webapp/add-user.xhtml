@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/site-template.xhtml">
+    <ui:param name="pageTitle" value="Page One"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <f:view>
+                <h:form rendered="#{userBean.newDB}">
+                    <h:panelGrid columns="2">
+                        <h:column >
+                            <h:outputLabel value="email:"/>
+                        </h:column>
+                        <h:column >
+                            <h:inputText value="#{userBean.email}"/>
+                        </h:column>
+                        <h:column >
+                            <h:outputLabel value="password:"/>
+                        </h:column>
+                        <h:column >
+                            <h:inputText value="#{userBean.password}"/>
+                        </h:column>
+                    <br/>
+                    </h:panelGrid>
+                    <br/>
+                    <!--<h:outputLabel value="role:"/>
+                    <h:selectOneRadio value="#{userBean.role}">
+                        <f:selectItem itemValue="ADMIN" itemLabel="Admin" />
+                        <f:selectItem itemValue="TEACHER" itemLabel="Teacher" />
+                        <f:selectItem itemValue="STUDENT" itemLabel="Student" />
+                    </h:selectOneRadio>-->
+                    <br/>
+                    <h:commandButton action="#{userBean.createUser}" value="Create Admin"/>
+                </h:form>
+            </f:view>
+        </div>
+    </ui:define>
+</ui:composition>
+
+
+</html>

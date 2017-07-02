@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/site-template.xhtml">
+<ui:param name="pageTitle" value="Teacher"/>
+    <ui:define name="main-panel">
+    <h:outputStylesheet name="css/tables.css" />
+        <div id="main-container">
+            <h:outputLabel value="Attendance Stats:" />
+            <h:panelGrid columns="3">
+                <h:dataTable id="student-attendance-table" value="#{studentStats.studentCourses()}" var="course" rowClasses="even-row, odd-row">
+                    <h:column >
+                        <f:facet name="header">Course</f:facet>
+                        <h:outputText value="#{course.courseName}"/>
+                    </h:column>
+                    <h:column >
+                        <f:facet name="header">Start Date</f:facet>
+                        <h:outputText converter="groupkmp.DateConverter" value="#{course.startDate}"/>
+                    </h:column>
+                    <h:column >
+                        <f:facet name="header">End Date</f:facet>
+                        <h:outputText converter="groupkmp.DateConverter" value="#{course.endDate}"/>
+                    </h:column>
+                    <h:column >
+                        <f:facet name="header">Attendance</f:facet>
+                        <h:outputText value="#{studentStats.getAttendance(course.id)}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGrid>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

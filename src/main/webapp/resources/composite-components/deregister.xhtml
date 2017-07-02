@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+<cc:interface componentType="groupkmp.components.QuestionView">
+    <cc:attribute name="courseBean" type="jsf.CourseBean" required="true"/>
+    <cc:attribute name="isStudent" type="boolean" required="true"/>
+    <cc:attribute name="courseId" type="java.lang.Long" required="true"/>
+    <cc:attribute name="userId" type="java.lang.Long" required="true"/>
+    <!--    <cc:attribute name="action"
+                      method-signature="java.lang.Object action(java.lang.Long, java.lang.Long)"
+                      required="true"/>-->
+
+    <!--cc:clientBehavior name="click" targets="questionContainer:questionOptions:qop" event="click"/-->
+</cc:interface>
+
+<cc:implementation>
+    <f:view>
+        <!--    <h:form>-->
+
+        <c:set var="courseBean" value="#{cc.attrs.courseBean}"/>
+        <c:set var="isStudent" value="#{cc.attrs.isStudent}"/>
+
+        <c:set var="hasStarted" value="#{courseBean.getHasCourseStarted(cc.attrs.courseId)}"/>
+        <c:set var="isCurrent" value="#{courseBean.getIsCourseCurrent(cc.attrs.courseId)}"/>
+        <c:set var="hasEnded" value="#{courseBean.getHasCourseEnded(cc.attrs.courseId)}"/>
+        <c:set var="isRegistered"
+               value="#{courseBean.isStudentRegistered(cc.attrs.courseId, cc.attrs.userId)}"/>
+        <c:set var="leavingDate"
+               value="#{courseBean.getLeavingDate(cc.attrs.courseId, cc.attrs.userId)}"/>
+        <c:set var="hasLeavingDate"
+               value="#{leavingDate != null}"/>
+        <c:set var="hasLeft"
+               value="#{hasLeavingDate and courseBean.getCourseEndDate(cc.attrs.courseId) > leavingDate}"/>
+
+        <!--                      STUDENT                     -->
+
+        <h:commandLink value="Register"
+                       action="#{courseBean.register(cc.attrs.courseId, cc.attrs.userId)}"
+                       rendered="#{isStudent and !isRegistered and !hasStarted}"/>
+        <h:outputText value="Course Started "
+                      rendered="#{isStudent and !isRegistered and isCurrent}"/>
+        <h:outputText value="Course Ended"
+                      rendered="#{isStudent and !isRegistered and hasEnded}"/>
+        <h:outputText value="Not Started "
+                      rendered="#{isStudent and isRegistered and !hasStarted}"/>
+        <h:commandLink value="(Deregister)"
+                       action="#{courseBean.leaveOrDeregister(cc.attrs.courseId, cc.attrs.userId)}"
+                       rendered="#{isStudent and isRegistered and !hasStarted}"/>
+        <h:outputText value="Started "
+                      rendered="#{isStudent and isRegistered and isCurrent and !hasLeavingDate}"/>
+        <h:commandLink value="(Leave)"
+                       action="#{courseBean.leaveOrDeregister(cc.attrs.courseId, cc.attrs.userId)}"
+                       rendered="#{isStudent and isRegistered and isCurrent and !hasLeavingDate}"/>
+        <h:outputText value="Left on #{leavingDate}"
+                      rendered="#{isStudent and isRegistered and isCurrent and hasLeavingDate and hasLeft}"/>
+        <h:outputText value="Leaving on #{leavingDate}"
+                      rendered="#{isStudent and isRegistered and isCurrent and hasLeavingDate and !hasLeft}"/>
+        <h:outputText value="Completed"
+                      rendered="#{isStudent and isRegistered and hasEnded}"/>
+
+
+        <!--                 NOT STUDENT               -->
+
+        <h:outputText value="Course Started"
+                      rendered="#{!isStudent and isCurrent}"/>
+
+        <h:outputText value="Not Started"
+                      rendered="#{!isStudent and !hasStarted}"/>
+
+        <h:outputText value="Completed"
+                      rendered="#{!isStudent and hasEnded}"/>
+
+    </f:view>
+</cc:implementation>
+</html>

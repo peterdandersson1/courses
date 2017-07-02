@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/site-template.xhtml">
+    <h:outputStylesheet>
+        <style>
+            #cal {
+                margin: 100px;
+            }
+
+            #courses-table {
+                display: inline-block;
+                float: left;
+            }
+        </style>
+    </h:outputStylesheet>
+
+    <ui:param name="pageTitle" value="Admin"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <h:panelGroup rendered="#{userBean.isAdmin() || userBean.teacher}">
+                <br />
+                <h:outputText styleClass="tableTitle" value="Courses:" />
+                <ui:decorate template="/templates/courses-table.xhtml">
+                    <ui:param name="context" value="attendance" />
+                </ui:decorate>
+                <h:form id="cal-form">
+                    <p:calendar id="cal" value="#{attendanceBean.date}" mode="inline">
+                        <p:ajax event="dateSelect"
+                                listener="#{attendanceBean.onDateSelect}"
+                                update="attendance-form msgs cal" />
+                    </p:calendar>
+                </h:form>
+                <ui:decorate template="/templates/attendance-form.xhtml">
+                </ui:decorate>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{!(userBean.isAdmin() || userBean.teacher)}">
+                <h:outputLabel value="denied"/>
+            </h:panelGroup>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

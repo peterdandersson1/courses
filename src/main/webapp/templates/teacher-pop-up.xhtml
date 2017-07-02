@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <div id="pop-up">
+        <h:commandLink action="#{teachersBean.cancelPopup}">
+            <div id="pop-up-outer"></div>
+        </h:commandLink>
+        <div id="pop-up-inner-container">
+            <div id="pop-up-inner">
+                <h:panelGrid columns="2">
+                    <h:column >
+                        <h:outputText value="First name:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.firstName}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Last name:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.lastName}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Email:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.email}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Password:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.password}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Address:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputTextarea value="#{teachersBean.editTeacherObj.address}"/>
+                    </h:column>
+                </h:panelGrid>
+                <br />
+                <h:outputLabel value="Courses:" />
+                <div id="courses-box" >
+
+                <h:panelGrid columns="2">
+                    <h:dataTable id="teachers-courses" value="#{teachersBean.courseList}" var="course">
+                        <h:column >
+                            <h:outputText value="#{course.courseName}"/>
+                        </h:column>
+                        <h:column >
+                            <h:commandButton value="Remove" action="#{teachersBean.removeCourse(course.id)}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGrid>
+
+              </div>
+
+                <h:outputLabel value="All Courses:" />
+
+                <h:selectOneMenu value="#{teachersBean.courseId}">
+                    <f:selectItems value="#{teachersBean.allCourses}" var="c"
+                                   itemLabel="#{c.courseName}" itemValue="#{c.id}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Add Teacher to Course" action="#{teachersBean.addCourse(teachersBean.courseId)}" />
+                <br/>
+                <h:inputHidden value="#{teachersBean.editTeacherObj.id}"/>
+                <div id="pop-up-btns">
+                    <h:commandButton value="Save" action="#{teachersBean.saveTeacher(teachersBean.editTeacherObj)}" />
+                    <h:commandButton value="Cancel" action="#{teachersBean.cancelPopup}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</f:view>
+</html>

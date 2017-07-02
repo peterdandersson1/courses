@@ -1,0 +1,56 @@
+
+#pop-up-outer{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.6;
+    width: 100%;
+    height: 100%;
+    background-color: #888894;
+}
+#pop-up-inner-container{
+    position: absolute;
+    height: 0px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
+}
+#pop-up-inner{
+    margin: auto;
+    margin-top: -60%;
+    background-color: white;
+    height: 400px;
+    width: 600px;
+    text-align: left;
+    box-sizing: border-box;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    border: solid #979797 1px;
+    border-radius: 4px;
+    background-color: #f0f0ff;
+}
+#pop-up-inner td {
+    padding: 5px 10px ;
+}
+#courses-box{
+    overflow: auto;
+    height: 80px;
+    background-color: #fff;
+    border: solid 1px #aaa;
+    border-radius: 2px;
+}
+#courses-box td{
+    padding: 0px 20px ;
+}
+#courses-box{
+    margin-top: 5px;
+}
+#pop-up-btns{
+    float: right;
+}
+#pop-up-inner select{
+    margin-top: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
